@@ -8,5 +8,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'money-tracker';
+  name = 'Money Tracker';
+
+  person = {
+    firstname: 'Aria',
+    lastname: 'Diamanti',
+    age: 24,
+    email: 'aria@gmail.com'
+  }
 }
