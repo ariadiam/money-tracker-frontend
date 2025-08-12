@@ -15,10 +15,9 @@ export class TransactionService {
     private authService: AuthService
   ) {}
 
-  getTransactions(): Observable<Transaction[]> {
-    const userId = this.authService.getUserIdFromToken();
-    return this.http.get<Transaction[]>(`${this.baseUrl}/${userId}/transactions`);
-  }
+ getTransactions(userId: string): Observable<Transaction[]> {
+  return this.http.get<Transaction[]>(`http://localhost:3000/api/${userId}/transactions`);
+}
 
   addTransaction(transaction: Transaction): Observable<Transaction> {
     const userId = this.authService.getUserIdFromToken();

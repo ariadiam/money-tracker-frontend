@@ -1,1 +1,20 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Welcome, {{ authService.getUserIdFromToken() }}!</h2>
+
+  <div class="summary">
+    <div class="summary-item income">
+      <h3>Total Income</h3>
+      <p>{{ totalIncome | currency }}</p>
+    </div>
+    <div class="summary-item expenses">
+      <h3>Total Expenses</h3>
+      <p>{{ totalExpenses | currency }}</p>
+    </div>
+    <div class="summary-item balance">
+      <h3>Balance</h3>
+      <p>{{ balance | currency }}</p>
+    </div>
+  </div>
+
+  <app-transaction-list [transactions]="transactions"></app-transaction-list>
+</div>

@@ -1,1 +1,20 @@
-<p>transaction-list works!</p>
+<table class="transaction-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tx of transactions">
+      <td>{{ tx.date | date:'shortDate' }}</td>
+      <td>{{ tx.description }}</td>
+      <td [ngClass]="{ 'expense': tx.amount < 0, 'income': tx.amount > 0 }">
+        {{ tx.amount | currency }}
+      </td>
+      <td>{{ tx.category }}</td>
+    </tr>
+  </tbody>
+</table>
