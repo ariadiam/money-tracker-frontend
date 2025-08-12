@@ -2,32 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../shared/interfaces/transaction';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TransactionService {
-  private apiUrl = 'http://localhost:3000/api/transactions';
+  private baseUrl = 'http://localhost:3000/api'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.apiUrl);
+    const userId = this.authService.getUserIdFromToken();
+    return this.http.get<Transaction[]>(`${this.baseUrl}/${userId}/transactions`);
   }
 
-  getTransactionById(id: string): Observable<Transaction> {
-    return this.http.get<Transaction>(`${this.apiUrl}/${id}`);
+  addTransaction(transaction: Transaction): Observable<Transaction> {
+    const userId = this.authService.getUserIdFromToken();
+    return this.http.post<Transaction>(`${this.baseUrl}/${userId}/transactions`, transaction);
   }
 
-  createTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(this.apiUrl, transaction);
+  updateTransaction(transactionId: string, transaction: Transaction): Observable<Transaction> {
+    const userId = this.authService.getUserIdFromToken();
+    return this.http.patch<Transaction>(`${this.baseUrl}/${userId}/transactions/${transactionId}`, transaction);
   }
 
-  updateTransaction(id: string, transaction: Transaction): Observable<Transaction> {
-    return this.http.put<Transaction>(`${this.apiUrl}/${id}`, transaction);
+  deleteTransaction(transactionId: string): Observable<{ message: string }> {
+    const userId = this.authService.getUserIdFromToken();
+    return this.http.delete<{ message: string }>(`${this.baseUrl}/${userId}/transactions/${transactionId}`);
   }
 
-  deleteTransaction(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  getSummary(): Observable<any> {
+    const userId = this.authService.getUserIdFromToken();
+    return this.http.get<any>(`${this.baseUrl}/${userId}/transactions/summary`);
   }
 }
