@@ -70,7 +70,8 @@ addTransaction(): void {
 
   this.transactionService.addTransaction(transactionData).subscribe({
     next: (savedTx) => {
-      this.transactions.unshift(savedTx); // Add new tx to top of list
+      this.transactions.unshift(savedTx); 
+      this.transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       this.calculateSummary();
       this.newTransaction = {
         description: '',
@@ -83,5 +84,6 @@ addTransaction(): void {
     }
   });
 }
+
 
 }
