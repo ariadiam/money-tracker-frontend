@@ -19,10 +19,10 @@ export class TransactionService {
   return this.http.get<Transaction[]>(`http://localhost:3000/api/${userId}/transactions`);
 }
 
-  addTransaction(transaction: Transaction): Observable<Transaction> {
-    const userId = this.authService.getUserIdFromToken();
-    return this.http.post<Transaction>(`${this.baseUrl}/${userId}/transactions`, transaction);
-  }
+  addTransaction(transaction: Partial<Transaction>) {
+  const userId = this.authService.getUserIdFromToken();
+  return this.http.post<Transaction>(`${this.baseUrl}/${userId}/transactions`, transaction);
+}
 
   updateTransaction(transactionId: string, transaction: Transaction): Observable<Transaction> {
     const userId = this.authService.getUserIdFromToken();

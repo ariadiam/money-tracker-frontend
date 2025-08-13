@@ -3,14 +3,15 @@ import { TransactionService } from '../../services/transactions/transaction.serv
 import { Transaction } from '../../shared/interfaces/transaction';
 import { TransactionListComponent } from '../transactions/transaction-list/transaction-list.component';
 import { AuthService } from '../../services/auth/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,                     
-  imports: [TransactionListComponent, CommonModule] 
+  imports: [TransactionListComponent, CommonModule, CurrencyPipe, FormsModule] 
 })
 export class DashboardComponent implements OnInit {
   transactions: Transaction[] = [];
@@ -47,8 +48,40 @@ export class DashboardComponent implements OnInit {
 
     this.totalExpenses = this.transactions
       .filter(t => t.amount < 0)
-      .reduce((sum, t) => sum + t.amount, 0);
+      .reduce((sum, t) => sum + Math.abs(t.amount), 0); 
 
-    this.balance = this.totalIncome + this.totalExpenses;
+    this.balance = this.totalIncome - this.totalExpenses;
   }
+
+  newTransaction: Partial<Transaction> = {
+  description: '',
+  amount: 0,
+  date: new Date().toISOString().split('T')[0]
+};
+
+addTransaction(): void {
+  const userId = this.authService.getUserIdFromToken();
+  if (!userId) {
+    console.error('User not logged in');
+    return;
+  }
+
+  const transactionData = { ...this.newTransaction, userId };
+
+  this.transactionService.addTransaction(transactionData).subscribe({
+    next: (savedTx) => {
+      this.transactions.unshift(savedTx); // Add new tx to top of list
+      this.calculateSummary();
+      this.newTransaction = {
+        description: '',
+        amount: 0,
+        date: new Date().toISOString().split('T')[0]
+      };
+    },
+    error: (err) => {
+      console.error('Failed to add transaction', err);
+    }
+  });
+}
+
 }
