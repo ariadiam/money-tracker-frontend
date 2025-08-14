@@ -3,11 +3,12 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { TransactionService } from '../../services/transactions/transaction.service';
 import { Transaction } from '../../shared/interfaces/transaction';
 import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, NavbarComponent],
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })

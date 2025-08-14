@@ -1,65 +1,99 @@
-:host { display:block; min-height:100vh; background:#0f172a; }
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #0f172a;
+}
 
-.stats-wrap{
-  max-width:1100px;
+.stats-wrap {
+  max-width: 1100px;
   margin: 24px auto;
   padding: 0 20px;
-  color:#e5e7eb;
+  color: #e5e7eb;
 }
 
-.header{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  margin-bottom:16px;
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
-.header h1{ margin:0 0 4px; font-size:24px; color:#fff; }
-.header .sub{ margin:0; color:#9aa3b2; }
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:16px;
-  margin-bottom:16px;
+.header h1 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  color: #fff;
 }
-
-.card{
-  background:#0b1220;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 10px 35px rgba(0,0,0,.25);
+.header .sub {
+  margin: 0;
+  color: #9aa3b2;
 }
 
-.card.kpi .label{ color:#9aa3b2; font-size:12px; }
-.card.kpi .value{
-  margin-top:6px;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:.2px;
-  color:#f3f4f6; /* brighter for readability */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-.card.kpi.income{ border-color: rgba(34,197,94,.25); }
-.card.kpi.expense{ border-color: rgba(239,68,68,.25); }
-.card.kpi.balance{ border-color: rgba(59,130,246,.25); }
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
+.card {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 }
 
-.panel{
-  background:#0b1220;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  padding:18px;
+.card.kpi .label {
+  color: #9aa3b2;
+  font-size: 12px;
 }
-.panel h2{ margin:0 0 12px; font-size:18px; color:#fff; }
-.empty{ color:#9aa3b2; margin-top:8px; }
 
-@media (max-width: 900px){
-  .cards{ grid-template-columns: 1fr; }
-  .grid{ grid-template-columns: 1fr; }
+.card.kpi .value {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
 }
+
+.card.kpi.income .value {
+  color: #4ade80; 
+}
+.card.kpi.expense .value {
+  color: #f87171; 
+}
+.card.kpi.balance .value {
+  color: #60a5fa; 
+}
+
+.card.kpi.income {
+  border-color: rgba(34, 197, 94, 0.25);
+}
+.card.kpi.expense {
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.card.kpi.balance {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 18px;
+}
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: #fff;
+}
+.empty {
+  color: #9aa3b2;
+  margin-top: 8px;
+}
+
+

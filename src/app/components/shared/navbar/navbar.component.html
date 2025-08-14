@@ -2,13 +2,13 @@
   <div class="brand">DollaBillz</div>
   <div class="spacer"></div>
 
-  <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-  <a routerLink="/transactions" routerLinkActive="active-link">Transactions</a>
-  <a routerLink="/transactions/new" routerLinkActive="active-link">Add</a>
-  <a routerLink="/statistics" routerLinkActive="active-link">Statistics</a>
+  <div class="right">
+    <a routerLink="/dashboard" routerLinkActive="active-link">Transactions</a>
+    <a routerLink="/statistics" routerLinkActive="active-link">Statistics</a>
 
-  <div class="user">
-    <span class="hello">Hi, {{ username || 'User' }}</span>
-    <button class="logout" (click)="onLogout()">Logout</button>
+    <div class="user">
+      <span class="hello">Hi, {{ username || 'User' }}</span>
+      <button class="logout" (click)="onLogout()">Logout</button>
+    </div>
   </div>
 </nav>
