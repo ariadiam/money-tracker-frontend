@@ -39,8 +39,8 @@ export class DashboardComponent implements OnInit {
 
   loadTransactions(): void {
     this.transactionService.getTransactions().subscribe({
-      next: (res: ApiResponse<Transaction[]>) => {
-        this.transactions = res.data || [];
+      next: (transactions) => {
+        this.transactions = transactions;
         this.calculateSummary();
       },
       error: (err) => {
@@ -49,17 +49,35 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  calculateSummary(): void {
-    this.totalIncome = this.transactions
-      .filter(t => t.amount > 0)
-      .reduce((sum, t) => sum + t.amount, 0);
+//   calculateSummary(): void {
+//   const norm = (n: any) => Math.abs(Number(n) || 0);
 
-    this.totalExpenses = this.transactions
-      .filter(t => t.amount < 0)
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+//   this.totalIncome = this.transactions.reduce((sum, t) => {
+//     if (t.type === 'income') return sum + norm(t.amount);
+//     if (!t.type && Number(t.amount) > 0) return sum + Number(t.amount);
+//     return sum;
+//   }, 0);
 
-    this.balance = this.totalIncome - this.totalExpenses;
-  }
+//   this.totalExpenses = this.transactions.reduce((sum, t) => {
+//     if (t.type === 'expense') return sum + norm(t.amount);
+//     if (!t.type && Number(t.amount) < 0) return sum + Math.abs(Number(t.amount));
+//     return sum;
+//   }, 0);
+
+//   this.balance = this.totalIncome - this.totalExpenses;
+// }
+
+calculateSummary(): void {
+  this.totalIncome = this.transactions
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  this.totalExpenses = this.transactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  this.balance = this.totalIncome - this.totalExpenses;
+}
 
   addTransaction(): void {
     this.transactionService.addTransaction(this.newTransaction).subscribe({

@@ -39,9 +39,13 @@ export class TransactionListComponent {
         next: (res: any) => {
           const updatedTx = res.data;
           const index = this.transactions.findIndex(t => t._id === updatedTx._id);
-          if (index !== -1) this.transactions[index] = updatedTx;
+          if (index !== -1) {
+          const nextArray = [...this.transactions];
+          nextArray[index] = { ...updatedTx };
+          this.transactions = nextArray;
+        }
 
-          this.transactionsChanged.emit(this.transactions); // tell parent
+          this.transactionsChanged.emit(this.transactions); 
 
           this.cancelEditing();
         },
@@ -52,16 +56,15 @@ export class TransactionListComponent {
   }
 
   deleteTransaction(transactionId: string) {
-    this.transactionService.deleteTransaction(transactionId)
-      .subscribe({
-        next: () => {
-          this.transactions = this.transactions.filter(t => t._id !== transactionId);
-
-          this.transactionsChanged.emit(this.transactions); // tell parent
-        },
-        error: (err) => {
-          console.error('Failed to delete transaction', err);
-        }
-      });
+  this.transactionService.deleteTransaction(transactionId)
+    .subscribe({
+      next: () => {
+        this.transactions = this.transactions.filter(t => t._id !== transactionId);
+        this.transactionsChanged.emit(this.transactions); 
+      },
+      error: (err) => {
+        console.error('Failed to delete transaction', err);
+      }
+    });
   }
 }

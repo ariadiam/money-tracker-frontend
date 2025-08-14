@@ -72,5 +72,8 @@
 <hr />
 
 <h2>Recent Transactions</h2>
-<app-transaction-list [transactions]="transactions"></app-transaction-list>
+<app-transaction-list
+  [transactions]="transactions"
+  (transactionsChanged)="onTransactionsChanged($event)">
+</app-transaction-list>
 </div>

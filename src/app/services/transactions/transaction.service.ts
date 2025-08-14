@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../shared/interfaces/transaction';
 import { ApiResponse } from 'src/app/shared/interfaces/api-response';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,11 @@ export class TransactionService {
 
   constructor(private http: HttpClient) {}
 
-  getTransactions(): Observable<ApiResponse<Transaction[]>> {
-    return this.http.get<ApiResponse<Transaction[]>>(this.baseUrl, this.getAuthHeaders());
-  }
+  getTransactions(): Observable<Transaction[]> {
+  return this.http
+    .get<ApiResponse<Transaction[]>>(`${this.baseUrl}`, this.getAuthHeaders())
+    .pipe(map(res => res.data || []));
+}
 
   addTransaction(transaction: Partial<Transaction>): Observable<ApiResponse<Transaction>> {
     return this.http.post<ApiResponse<Transaction>>(this.baseUrl, transaction, this.getAuthHeaders());
