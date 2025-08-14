@@ -1,66 +1,143 @@
-.transaction-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  font-family: Arial, sans-serif;
+.table-card{
+  background:#0b1220;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:16px;
+  color:#e5e7eb;
+  box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
-.transaction-table th,
-.transaction-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.table-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.table-head h3{
+  margin:0;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:.2px;
+  color:#fff;
 }
 
-.transaction-table th {
-  background-color: #f5f5f5;
-  font-weight: 600;
+.table-scroll{
+  overflow:auto;
+  border-radius:12px;
 }
 
-.transaction-table tr:hover {
-  background-color: #f9f9f9;
+.transaction-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 8px; 
+  min-width:680px; 
 }
 
-.income {
-  color: green;
-  font-weight: bold;
+.transaction-table thead th{
+  text-align:left;
+  padding:10px 12px;
+  color:#9aa3b2;
+  font-weight:600;
+  font-size:12px;
 }
 
-.expense {
-  color: red;
-  font-weight: bold;
+.transaction-table th.right,
+.transaction-table td.right{
+  text-align:right;
 }
 
-.transaction-table input[type="text"],
-.transaction-table input[type="number"],
-.transaction-table input[type="date"] {
-  width: 100%;
-  padding: 0.3rem 0.5rem;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.transaction-table tbody tr{
+  background:#0f172a;
+  transition:transform .12s ease, background .12s ease, box-shadow .12s ease;
+}
+.transaction-table tbody tr:hover{
+  background:#111e36;
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
 }
 
-.transaction-table button {
-  margin-right: 0.25rem;
-  padding: 0.3rem 0.5rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #1976d2;
-  color: white;
-  font-size: 0.85rem;
+.transaction-table td{
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.transaction-table td:first-child{
+  border-left:1px solid rgba(255,255,255,.06);
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+}
+.transaction-table td:last-child{
+  border-right:1px solid rgba(255,255,255,.06);
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
 }
 
-.transaction-table button:hover {
-  background-color: #115293;
+.amount{
+  font-weight:700;
+}
+.amount.income{ color:#22c55e; }  
+.amount.expense{ color:#ef4444; } 
+
+.muted{ color:#cbd5e1; }
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  background:#111827;
+  border:1px solid rgba(255,255,255,.08);
+  color:#e5e7eb;
 }
 
-.transaction-table button:nth-child(4) { 
-  background-color: #d32f2f;
+.inline-input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.14);
+  background:#0b1220;
+  color:#e5e7eb;
+  outline:none;
+  transition:border .18s ease;
+}
+.inline-input:focus{ border-color:#60a5fa; }
+.inline-input.right{ text-align:right; }
+
+.action-bar{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
 }
 
-.transaction-table button:nth-child(4):hover {
-  background-color: #9a1c1c;
+.action-btn{
+  padding:8px 12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:12px;
+  background:#111827;
+  color:#e5e7eb;
+  border:1px solid rgba(255,255,255,.12);
+  transition:background .15s ease, transform .05s ease, border-color .15s ease;
 }
+.action-btn:hover{
+  background:#0f172a;
+  border-color:rgba(255,255,255,.18);
+}
+.action-btn:active{ transform:translateY(1px); }
 
+.action-btn.edit{ }
+.action-btn.save{ background:#2563eb; border-color:transparent; }
+.action-btn.save:hover{ background:#1d4ed8; }
+.action-btn.cancel{ }
+.action-btn.delete{ background:#b91c1c; border-color:transparent; }
+.action-btn.delete:hover{ background:#9a1c1c; }
+
+.empty{
+  margin-top:10px;
+  text-align:center;
+  color:#9aa3b2;
+  font-size:14px;
+}

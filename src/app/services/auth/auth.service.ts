@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { User } from 'src/app/shared/interfaces/user';    
-import { LoginRequest, LoginResponse, RegisterRequest } from '../../shared/interfaces/auth';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +49,30 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  getUsername(): string | null {
+    const stored = localStorage.getItem('username');
+    if (stored) return stored;
+
+    return this.getUsernameFromToken();
+  }
+
+  getUsernameFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const [, payloadB64] = token.split('.');
+      if (!payloadB64) return null;
+      const b64 = payloadB64.replace(/-/g, '+').replace(/_/g, '/');
+      const json = atob(b64);
+      const payload = JSON.parse(json);
+      return payload?.username ?? null;
+    } catch (e) {
+      console.error('Failed to parse token', e);
+      return null;
+    }
   }
 
   getUserIdFromToken(): string | null {

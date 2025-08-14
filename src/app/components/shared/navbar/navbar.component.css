@@ -1,0 +1,50 @@
+.nav {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  background: #0b1220;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  font-size: 18px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hello {
+  color: #9aa3b2;
+}
+
+.logout {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #111827;
+  color: #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: #0f172a;
+}
+
+a { color:#9aa3b2; text-decoration:none; margin-right:12px; }
+a.active-link { color:#fff; font-weight:700; }
+

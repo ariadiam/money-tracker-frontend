@@ -1,79 +1,71 @@
-<div class="dashboard-container">
-  <h1>Welcome, {{ authService.getUserIdFromToken() }}</h1>
+<app-navbar></app-navbar>
 
-  <div class="summary-cards">
-    <div class="card income">
-      <h3>Total Income</h3>
-      <p>{{ totalIncome | currency }}</p>
+<div class="dash-wrap">
+  <header class="header">
+    <div>
+      <h1>Welcome, {{ authService.getUsername() || 'User' }}</h1>
+      <p class="sub">Here’s a quick look at your money this month.</p>
     </div>
-    <div class="card expenses">
-      <h3>Total Expenses</h3>
-      <p>{{ totalExpenses | currency }}</p>
+  </header>
+
+  <section class="cards">
+    <div class="card kpi income">
+      <div class="label">Total Income</div>
+      <div class="value">{{ totalIncome | currency }}</div>
     </div>
-    <div class="card balance">
-      <h3>Balance</h3>
-      <p>{{ balance | currency }}</p>
+    <div class="card kpi expense">
+      <div class="label">Total Expenses</div>
+      <div class="value">{{ totalExpenses | currency }}</div>
     </div>
-  </div>
+    <div class="card kpi balance">
+      <div class="label">Balance</div>
+      <div class="value">{{ balance | currency }}</div>
+    </div>
+  </section>
 
-  <h2>Add Transaction</h2>
-<form (ngSubmit)="addTransaction()" #transactionForm="ngForm" class="transaction-form">
+  <section class="card panel">
+    <h2>Add Transaction</h2>
+    <form (ngSubmit)="addTransaction()" #transactionForm="ngForm" class="tx-form">
+      <div class="field">
+        <label for="description">Description</label>
+        <input id="description" type="text" [(ngModel)]="newTransaction.description" name="description" required />
+      </div>
 
-  <label for="description">Description</label>
-  <input
-    type="text"
-    id="description"
-    [(ngModel)]="newTransaction.description"
-    name="description"
-    required
-  />
+      <div class="field">
+        <label for="amount">Amount</label>
+        <input id="amount" type="number" [(ngModel)]="newTransaction.amount" name="amount" required />
+      </div>
 
-  <label for="amount">Amount</label>
-  <input
-    type="number"
-    id="amount"
-    [(ngModel)]="newTransaction.amount"
-    name="amount"
-    required
-  />
+      <div class="field">
+        <label for="date">Date</label>
+        <input id="date" type="date" [(ngModel)]="newTransaction.date" name="date" required />
+      </div>
 
-  <label for="date">Date</label>
-  <input
-    type="date"
-    id="date"
-    [(ngModel)]="newTransaction.date"
-    name="date"
-    required
-  />
+      <div class="field">
+        <label for="type">Type</label>
+        <select id="type" [(ngModel)]="newTransaction.type" name="type" required>
+          <option [ngValue]="undefined" disabled>Select type...</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
 
-  <label for="type">Type</label>
-  <select
-    id="type"
-    [(ngModel)]="newTransaction.type"
-    name="type"
-    required
-  >
-    <option value="income">Income</option>
-    <option value="expense">Expense</option>
-  </select>
+      <div class="field">
+        <label for="category">Category</label>
+        <input id="category" type="text" [(ngModel)]="newTransaction.category" name="category" required />
+      </div>
 
-  <label for="category">Category</label>
-  <input
-    type="text"
-    id="category"
-    [(ngModel)]="newTransaction.category"
-    name="category"
-    required
-  />
+      <div class="actions">
+        <button type="submit" [disabled]="transactionForm.invalid" class="btn primary">Add</button>
+      </div>
+    </form>
+  </section>
 
-  <button type="submit" [disabled]="transactionForm.invalid">Add</button>
-</form>
-
-<hr />
-
-<h2>Recent Transactions</h2>
-<app-transaction-list
-  [transactions]="transactions"
-  (transactionsChanged)="onTransactionsChanged($event)">
-</app-transaction-list>
+  <section class="card panel">
+    <h2>Recent Transactions</h2>
+    <app-transaction-list
+      [transactions]="transactions"
+      (transactionsChanged)="onTransactionsChanged($event)">
+    </app-transaction-list>
+  </section>
 </div>

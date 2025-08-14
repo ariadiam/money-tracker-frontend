@@ -1,43 +1,79 @@
-<table class="transaction-table">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Amount</th>
-      <th>Category</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let tx of transactions">
-      <td *ngIf="editingTransactionId !== tx._id">{{ tx.date | date:'shortDate' }}</td>
-      <td *ngIf="editingTransactionId === tx._id">
-        <input [(ngModel)]="editedTransaction.date" type="date" />
-      </td>
+<div class="table-card">
+  <div class="table-head">
+    <h3>Recent Transactions</h3>
+  </div>
 
-      <td *ngIf="editingTransactionId !== tx._id">{{ tx.description }}</td>
-      <td *ngIf="editingTransactionId === tx._id">
-        <input [(ngModel)]="editedTransaction.description" type="text" />
-      </td>
+  <div class="table-scroll">
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th class="right">Amount</th>
+          <th class="right">Actions</th>
+        </tr>
+      </thead>
 
-      <td *ngIf="editingTransactionId !== tx._id" [ngClass]="{ 'expense': tx.amount < 0, 'income': tx.amount > 0 }">
-        {{ tx.amount | currency }}
-      </td>
-      <td *ngIf="editingTransactionId === tx._id">
-        <input [(ngModel)]="editedTransaction.amount" type="number" />
-      </td>
+      <tbody>
+        <tr *ngFor="let tx of transactions">
+          <td>
+            <ng-container *ngIf="editingTransactionId !== tx._id; else dateEdit">
+              {{ tx.date | date:'mediumDate' }}
+            </ng-container>
+            <ng-template #dateEdit>
+              <input class="inline-input" type="date" [(ngModel)]="editedTransaction.date" />
+            </ng-template>
+          </td>
 
-      <td *ngIf="editingTransactionId !== tx._id">{{ tx.category }}</td>
-      <td *ngIf="editingTransactionId === tx._id">
-        <input [(ngModel)]="editedTransaction.category" type="text" />
-      </td>
+          <td>
+            <ng-container *ngIf="editingTransactionId !== tx._id; else descEdit">
+              <span class="muted">{{ tx.description || '—' }}</span>
+            </ng-container>
+            <ng-template #descEdit>
+              <input class="inline-input" type="text" [(ngModel)]="editedTransaction.description" />
+            </ng-template>
+          </td>
 
-      <td>
-        <button *ngIf="editingTransactionId !== tx._id" (click)="startEditing(tx)">Edit</button>
-        <button *ngIf="editingTransactionId === tx._id" (click)="saveTransaction()">Save</button>
-        <button *ngIf="editingTransactionId === tx._id" (click)="cancelEditing()">Cancel</button>
-        <button (click)="deleteTransaction(tx._id!)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <td>
+            <ng-container *ngIf="editingTransactionId !== tx._id; else catEdit">
+              <span class="badge">{{ tx.category }}</span>
+            </ng-container>
+            <ng-template #catEdit>
+              <input class="inline-input" type="text" [(ngModel)]="editedTransaction.category" />
+            </ng-template>
+          </td>
+
+          <td class="right">
+            <ng-container *ngIf="editingTransactionId !== tx._id; else amountEdit">
+              <span [ngClass]="['amount', tx.type]">
+                {{ tx.type === 'expense' ? -tx.amount : tx.amount | currency }}
+              </span>
+            </ng-container>
+            <ng-template #amountEdit>
+              <input class="inline-input right" type="number" [(ngModel)]="editedTransaction.amount" />
+            </ng-template>
+          </td>
+
+
+          <td class="right">
+            <div class="action-bar" *ngIf="editingTransactionId !== tx._id; else editBtns">
+              <button class="action-btn edit" (click)="startEditing(tx)">Edit</button>
+              <button class="action-btn delete" (click)="deleteTransaction(tx._id!)">Delete</button>
+            </div>
+            <ng-template #editBtns>
+              <div class="action-bar">
+                <button class="action-btn save" (click)="saveTransaction()">Save</button>
+                <button class="action-btn cancel" (click)="cancelEditing()">Cancel</button>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty" *ngIf="!transactions || transactions.length === 0">
+    No transactions yet. Add your first one!
+  </div>
+</div>
