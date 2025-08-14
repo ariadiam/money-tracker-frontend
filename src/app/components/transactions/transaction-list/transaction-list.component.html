@@ -5,16 +5,39 @@
       <th>Description</th>
       <th>Amount</th>
       <th>Category</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let tx of transactions">
-      <td>{{ tx.date | date:'shortDate' }}</td>
-      <td>{{ tx.description }}</td>
-      <td [ngClass]="{ 'expense': tx.amount < 0, 'income': tx.amount > 0 }">
+      <td *ngIf="editingTransactionId !== tx._id">{{ tx.date | date:'shortDate' }}</td>
+      <td *ngIf="editingTransactionId === tx._id">
+        <input [(ngModel)]="editedTransaction.date" type="date" />
+      </td>
+
+      <td *ngIf="editingTransactionId !== tx._id">{{ tx.description }}</td>
+      <td *ngIf="editingTransactionId === tx._id">
+        <input [(ngModel)]="editedTransaction.description" type="text" />
+      </td>
+
+      <td *ngIf="editingTransactionId !== tx._id" [ngClass]="{ 'expense': tx.amount < 0, 'income': tx.amount > 0 }">
         {{ tx.amount | currency }}
       </td>
-      <td>{{ tx.category }}</td>
+      <td *ngIf="editingTransactionId === tx._id">
+        <input [(ngModel)]="editedTransaction.amount" type="number" />
+      </td>
+
+      <td *ngIf="editingTransactionId !== tx._id">{{ tx.category }}</td>
+      <td *ngIf="editingTransactionId === tx._id">
+        <input [(ngModel)]="editedTransaction.category" type="text" />
+      </td>
+
+      <td>
+        <button *ngIf="editingTransactionId !== tx._id" (click)="startEditing(tx)">Edit</button>
+        <button *ngIf="editingTransactionId === tx._id" (click)="saveTransaction()">Save</button>
+        <button *ngIf="editingTransactionId === tx._id" (click)="cancelEditing()">Cancel</button>
+        <button (click)="deleteTransaction(tx._id!)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

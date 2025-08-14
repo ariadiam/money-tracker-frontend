@@ -46,6 +46,26 @@
     required
   />
 
+  <label for="type">Type</label>
+  <select
+    id="type"
+    [(ngModel)]="newTransaction.type"
+    name="type"
+    required
+  >
+    <option value="income">Income</option>
+    <option value="expense">Expense</option>
+  </select>
+
+  <label for="category">Category</label>
+  <input
+    type="text"
+    id="category"
+    [(ngModel)]="newTransaction.category"
+    name="category"
+    required
+  />
+
   <button type="submit" [disabled]="transactionForm.invalid">Add</button>
 </form>
 

@@ -9,7 +9,7 @@ import { LoginRequest, LoginResponse, RegisterRequest } from '../../shared/inter
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth';
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +17,12 @@ export class AuthService {
   return this.http.post<any>(`${this.apiUrl}/auth/login`, { username, password })
     .pipe(
       tap(response => {
-        if (response.token) {
-          localStorage.setItem('token', response.token);
+        if (response?.data?.token) {
+          localStorage.setItem('token', response.data.token);
           localStorage.setItem('userId', response.data.user._id);
+          localStorage.setItem('username', response.data.user.username);
+        } else {
+          console.warn('Login response has no token', response);
         }
       })
     );
@@ -47,11 +50,15 @@ export class AuthService {
   if (!token) return null;
 
   try {
-    const payload = JSON.parse(atob(token.split('.')[1])); 
-    return payload.userId || null; 
+    const parts = token.split('.');
+    if (parts.length !== 3) throw new Error('Token does not have 3 parts');
+
+    const payload = JSON.parse(atob(parts[1]));
+    return payload.userId || null;
   } catch (e) {
     console.error('Invalid token format', e);
     return null;
   }
- }
+}
+
 }

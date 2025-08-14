@@ -31,11 +31,12 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe({
-        next: () => {
+        next: (res) => {
+          console.log('LoginComponent subscribe result:', res);
           this.router.navigate(['/dashboard']);
         },
       error: (err) => {
-          console.error(err);
+          console.error('LoginComponent error:', err);
       }
     });
   }
