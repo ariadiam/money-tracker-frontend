@@ -28,9 +28,17 @@ export class AuthService {
     );
 }
 
-  register(userData: User): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, userData);
+  register(payload: {
+    username: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone?: any[];
+  }) {
+    return this.http.post<any>('http://localhost:3000/api/auth/register', payload);
   }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

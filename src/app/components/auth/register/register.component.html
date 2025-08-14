@@ -1,27 +1,105 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-  <div>
-    <label for="username">Username</label>
-    <input id="username" type="text" formControlName="username" />
-    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
-      Username is required.
-    </div>
-  </div>
+<div class="auth-wrapper">
+  <div class="card">
+    <h1>Create your account</h1>
+    <p class="sub">Track your money in minutes.</p>
 
-  <div>
-    <label for="email">Email</label>
-    <input id="email" type="email" formControlName="email" />
-    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-      A valid email is required.
-    </div>
-  </div>
+    <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
 
-  <div>
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="password" />
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-      Password is required.
-    </div>
-  </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="grid two">
+        <div class="form-field"
+             [class.invalid]="registerForm.get('firstname')?.invalid && (registerForm.get('firstname')?.touched || submitted)">
+          <label for="firstname">First name</label>
+          <input id="firstname" type="text" formControlName="firstname" placeholder="Name" />
+          <small class="msg"
+                 *ngIf="registerForm.get('firstname')?.hasError('required') && (registerForm.get('firstname')?.touched || submitted)">
+            First name is required.
+          </small>
+        </div>
 
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
-</form>
+        <div class="form-field"
+             [class.invalid]="registerForm.get('lastname')?.invalid && (registerForm.get('lastname')?.touched || submitted)">
+          <label for="lastname">Last name</label>
+          <input id="lastname" type="text" formControlName="lastname" placeholder="Lastname" />
+          <small class="msg"
+                 *ngIf="registerForm.get('lastname')?.hasError('required') && (registerForm.get('lastname')?.touched || submitted)">
+            Last name is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-field"
+           [class.invalid]="registerForm.get('username')?.invalid && (registerForm.get('username')?.touched || submitted)">
+        <label for="username">Username</label>
+        <input id="username" type="text" formControlName="username" placeholder="myuser" />
+        <small class="msg" *ngIf="registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.touched || submitted)">
+          Username is required.
+        </small>
+        <small class="msg" *ngIf="registerForm.get('username')?.hasError('minlength') && (registerForm.get('username')?.touched || submitted)">
+          Must be at least 3 characters.
+        </small>
+      </div>
+
+      <div class="form-field"
+           [class.invalid]="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || submitted)">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="mail@example.com" />
+        <small class="msg" *ngIf="registerForm.get('email')?.hasError('required') && (registerForm.get('email')?.touched || submitted)">
+          Email is required.
+        </small>
+        <small class="msg" *ngIf="registerForm.get('email')?.hasError('email') && (registerForm.get('email')?.touched || submitted)">
+          Enter a valid email.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="phone">Phone (optional)</label>
+        <input id="phone" type="tel" formControlName="phone" placeholder="+30 69..." />
+      </div>
+
+      <div class="grid two">
+        <div class="form-field"
+             [class.invalid]="registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || submitted)">
+          <label for="password">Password</label>
+          <input id="password" type="password" formControlName="password" placeholder="••••••••" />
+          <small class="msg" *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.touched || submitted)">
+            Password is required.
+          </small>
+          <small class="msg" *ngIf="registerForm.get('password')?.hasError('minlength') && (registerForm.get('password')?.touched || submitted)">
+            Must be at least 6 characters.
+          </small>
+        </div>
+
+        <div class="form-field"
+             [class.invalid]="(registerForm.get('confirmPassword')?.touched || submitted) && registerForm.hasError('passwordMismatch')">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••••" />
+          <small class="msg" *ngIf="(registerForm.get('confirmPassword')?.touched || submitted) && registerForm.hasError('passwordMismatch')">
+            Passwords don’t match.
+          </small>
+        </div>
+      </div>
+
+      <button class="btn primary"
+              type="submit"
+              [disabled]="registerForm.invalid || registerForm.pending">
+        Create account
+      </button>
+
+      <div class="or">
+        <span></span><em>OR</em><span></span>
+      </div>
+
+      <button class="btn google" type="button" (click)="continueWithGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" />
+        Continue with Google
+      </button>
+
+      <p class="meta">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </form>
+  </div>
+</div>
