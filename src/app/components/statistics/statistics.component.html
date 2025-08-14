@@ -1,0 +1,37 @@
+<div class="stats-wrap">
+  <div class="header">
+    <div>
+      <h1>Statistics</h1>
+      <p class="sub">Visual breakdown of your finances</p>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card kpi income">
+      <div class="label">Total Income</div>
+      <div class="value">{{ totalIncome | currency }}</div>
+    </div>
+    <div class="card kpi expense">
+      <div class="label">Total Expenses</div>
+      <div class="value">{{ totalExpenses | currency }}</div>
+    </div>
+    <div class="card kpi balance">
+      <div class="label">Balance</div>
+      <div class="value">{{ (totalIncome - totalExpenses) | currency }}</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Expenses by Category</h2>
+      <canvas #expensesCanvas height="220"></canvas>
+      <p class="empty" *ngIf="!hasExpenses">No expense data yet.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Income vs Expenses</h2>
+      <canvas #shareCanvas height="220"></canvas>
+      <p class="empty" *ngIf="transactions.length === 0">No data yet.</p>
+    </div>
+  </div>
+</div>
