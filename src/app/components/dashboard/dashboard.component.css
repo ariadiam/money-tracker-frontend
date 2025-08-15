@@ -56,17 +56,16 @@
   letter-spacing: .2px;
 }
 
-/* Neon-style KPI colors */
 .card.kpi.income .value {
-  color: #00ff95; /* neon green */
+  color: #00ff95; 
 }
 
 .card.kpi.expense .value {
-  color: #ff4d4d; /* neon red */
+  color: #ff4d4d; 
 }
 
 .card.kpi.balance .value {
-  color: #33cfff; /* neon cyan */
+  color: #33cfff; 
 }
 
 .card.kpi.income {
@@ -85,6 +84,11 @@
   margin: 0 0 12px;
   font-size: 18px;
   color: #fff;
+}
+
+.card.panel {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .tx-form {

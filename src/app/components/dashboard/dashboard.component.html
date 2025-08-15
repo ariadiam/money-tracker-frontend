@@ -11,15 +11,15 @@
   <section class="cards">
     <div class="card kpi income">
       <div class="label">Total Income</div>
-      <div class="value">{{ totalIncome | currency }}</div>
+      <div class="value">{{ totalIncome | currency: 'EUR' }}</div>
     </div>
     <div class="card kpi expense">
       <div class="label">Total Expenses</div>
-      <div class="value">{{ totalExpenses | currency }}</div>
+      <div class="value">{{ totalExpenses | currency: 'EUR' }}</div>
     </div>
     <div class="card kpi balance">
       <div class="label">Balance</div>
-      <div class="value">{{ balance | currency }}</div>
+      <div class="value">{{ balance | currency: 'EUR' }}</div>
     </div>
   </section>
 
