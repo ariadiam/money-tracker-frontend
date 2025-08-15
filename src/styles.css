@@ -4,11 +4,13 @@ html, body {
 }
 
 app-root {
+  min-height: 100vh;         
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
-router-outlet {
+
+.app-content {
   flex: 1;
+  display: block;
 }

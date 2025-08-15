@@ -13,7 +13,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let tx of transactions">
+        <tr *ngFor="let tx of pagedTransactions">
           <td>
             <ng-container *ngIf="editingTransactionId !== tx._id; else dateEdit">
               {{ tx.date | date:'mediumDate' }}
@@ -52,7 +52,6 @@
             </ng-template>
           </td>
 
-
           <td class="right">
             <div class="action-bar" *ngIf="editingTransactionId !== tx._id; else editBtns">
               <button class="action-btn edit" (click)="startEditing(tx)">Edit</button>
@@ -68,6 +67,22 @@
         </tr>
       </tbody>
     </table>
+  
+    <div class="pager" *ngIf="totalPages > 1">
+      <span class="muted">
+        Showing {{ startItemIndex }}–{{ endItemIndex }} of {{ totalItems }}
+      </span>
+
+      <div class="pager-controls">
+        <button class="pager-btn" [disabled]="currentPage === 1" (click)="goToPage(1)" aria-label="First page">«</button>
+        <button class="pager-btn" [disabled]="currentPage === 1" (click)="prevPage()" aria-label="Previous page">‹</button>
+
+        <span class="pager-page">Page {{ currentPage }} / {{ totalPages }}</span>
+
+        <button class="pager-btn" [disabled]="currentPage === totalPages" (click)="nextPage()" aria-label="Next page">›</button>
+        <button class="pager-btn" [disabled]="currentPage === totalPages" (click)="goToPage(totalPages)" aria-label="Last page">»</button>
+      </div>
+    </div>
   </div>
 
   <div class="empty" *ngIf="!transactions || transactions.length === 0">
