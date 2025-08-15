@@ -14,7 +14,7 @@ This is the **frontend** part of the Money Tracker project.
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 - **Angular** — Frontend framework  
 - **TypeScript** — Type-safe JavaScript  
 - **Bootstrap / CSS** — UI styling  
@@ -22,7 +22,7 @@ This is the **frontend** part of the Money Tracker project.
 
 ---
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 ### 1️⃣ Clone the repository
 ```bash
