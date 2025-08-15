@@ -53,6 +53,7 @@ export class RegisterComponent {
   if (this.registerForm.invalid) return;
 
   const { firstname, lastname, username, email, phone, password } = this.registerForm.value;
+  console.log('Form Values:', this.registerForm.value);
   this.authService.register({
     firstname,
     lastname,
@@ -64,7 +65,7 @@ export class RegisterComponent {
     next: (res) => {
       console.log('Registration success:', res);
       this.successMessage = 'Account created! You can now log in.';
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/dashboard']);
     },
     error: (err) => {
     console.error('Registration error:', err);

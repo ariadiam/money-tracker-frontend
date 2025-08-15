@@ -34,7 +34,9 @@ export class AuthService {
     email: string;
     phone?: any[];
   }) {
-    return this.http.post<any>('http://localhost:3000/api/auth/register', payload);
+    return this.http.post<any>('http://localhost:3000/api/auth/register', payload,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
   }
 
   logout(): void {

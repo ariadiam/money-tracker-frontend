@@ -11,7 +11,7 @@
         <div class="form-field"
              [class.invalid]="registerForm.get('firstname')?.invalid && (registerForm.get('firstname')?.touched || submitted)">
           <label for="firstname">First name</label>
-          <input id="firstname" type="text" formControlName="firstname" placeholder="Name" />
+          <input id="firstname" name="firstname" type="text" formControlName="firstname" placeholder="Name" />
           <small class="msg"
                  *ngIf="registerForm.get('firstname')?.hasError('required') && (registerForm.get('firstname')?.touched || submitted)">
             First name is required.
@@ -83,7 +83,7 @@
 
       <button class="btn primary"
               type="submit"
-              [disabled]="registerForm.invalid || registerForm.pending">
+              [disabled]="registerForm.invalid || registerForm.pending || submitted">
         Create account
       </button>
 
