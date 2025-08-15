@@ -4,11 +4,12 @@ import { TransactionService } from '../../services/transactions/transaction.serv
 import { Transaction } from '../../shared/interfaces/transaction';
 import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
+import { FooterComponent } from "../shared/footer/footer.component";
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, NavbarComponent],
+  imports: [CommonModule, CurrencyPipe, NavbarComponent, FooterComponent],
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })

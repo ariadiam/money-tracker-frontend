@@ -7,13 +7,14 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiResponse } from 'src/app/shared/interfaces/api-response'; 
 import { NavbarComponent } from '../shared/navbar/navbar.component';
+import { FooterComponent } from "../shared/footer/footer.component";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [TransactionListComponent, CommonModule, CurrencyPipe, FormsModule, NavbarComponent]
+  imports: [TransactionListComponent, CommonModule, CurrencyPipe, FormsModule, NavbarComponent, FooterComponent]
 })
 export class DashboardComponent implements OnInit {
   transactions: Transaction[] = [];
