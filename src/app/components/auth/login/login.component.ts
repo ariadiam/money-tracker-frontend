@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
 
@@ -11,7 +11,7 @@ import { AuthService } from '../../../services/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage = '';
   isSubmitting = false;
@@ -20,12 +20,23 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(4)]],
       remember: [false]
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        localStorage.setItem('authToken', token);
+        this.router.navigate(['/dashboard']);
+      }
     });
   }
 
@@ -57,7 +68,7 @@ export class LoginComponent {
   }
 
   redirectToGoogle(): void {
-  window.location.href = 'http://localhost:3000/api/auth/google/start';
+  window.location.href = 'http://localhost:3000/api/auth/google';
 }
 
   get u() { return this.loginForm.get('username'); }

@@ -77,6 +77,6 @@ export class RegisterComponent {
   });
 }
   continueWithGoogle(): void {
-    window.location.href = 'http://localhost:3000/api/auth/google/callback';
+    window.location.href = 'http://localhost:3000/api/auth/google';
   }
 }

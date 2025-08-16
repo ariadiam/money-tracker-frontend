@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'transactions', component: TransactionListComponent },
-  { path: 'transactions/add', component: AddTransactionComponent },
+  // { path: 'transactions', component: TransactionListComponent },
+  // { path: 'transactions/add', component: AddTransactionComponent },
   { path: 'statistics', component: StatisticsComponent },
 ];
